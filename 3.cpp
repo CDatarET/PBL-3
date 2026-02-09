@@ -34,14 +34,19 @@ class Graph{
 
         void display(){
             for(int i = 0; i < n; i++){
-                while(heads[i] != NULL){
-
+                GraphNode *current = heads[i];
+                while(current != NULL){
+                    cout << current->vertex << " ";
+                    current = current->next;
                 }
+
+                cout << endl;
             }
         }
 };
 
 int main(){
     Graph g;
+    g.display();
     return(0);
 }
