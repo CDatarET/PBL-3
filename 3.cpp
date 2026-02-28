@@ -18,28 +18,31 @@ class Graph{
             cout << "Enter # of Vertices: ";
             cin >> n;
             for(int i = 0; i < n; i++){
-                cout << "Enter name: ";
-                string name;
-                cin >> name;
+                heads[i] = new GraphNode;
+                heads[i]->next = new GraphNode;
+                GraphNode *current = heads[i]->next;
+                current->vertex = i;
 
-                cout << "How many adjacent vertices?: ";
+                cout << "Enter Name: ";
+                cin >> current->name;
+
+                cout << "Enter # of edges: ";
                 int edges;
                 cin >> edges;
-
-                cout << "Enter connections for " << name << ", ID = " << i << ": ";
-                heads[i] = new GraphNode;
-                heads[i]->name = name;
-                heads[i]->vertex = i;
-                heads[i]->next = new GraphNode;
-
-                GraphNode *current = heads[i]->next;
-                for(int j = 0; j < edges; j++){
-                    cin >> current->vertex;
-                    current->next = new GraphNode;
-                    current = current->next;
+                if(edges <= 0){
+                    cout << endl;
+                    continue;
                 }
 
+                cout << "Enter IDs of connections that " << current->name << " (ID = " << current->vertex << ")" << " has: ";
+                for(int i = 0; i < edges; i++){
+                    GraphNode *t = new GraphNode;
+                    cin >> t->vertex;
+                    current->next = t;
+                    current = current->next;
+                }
                 current->next = NULL;
+                cout << endl;
             }
         }
 
@@ -56,7 +59,7 @@ class Graph{
             cout << "-" << endl;
 
             for(int i = 0; i < n; i++){
-                GraphNode *current = heads[i];
+                GraphNode *current = heads[i]->next->next;
                 cout << i << "|";
                 for(int j = 0; j < n; j++){
                     if(current == NULL){
@@ -72,7 +75,7 @@ class Graph{
                         }
                     }
                 }
-                cout << endl
+                cout << endl;
             }
 
             cout << endl;
@@ -80,19 +83,20 @@ class Graph{
 
         void displayList(){
             for(int i = 0; i < n; i++){
-                GraphNode *current = heads[i];
+                GraphNode *current = heads[i]->next;
                 while(current != NULL){
-                    cout << heads[current->vertex]->name;
+                    cout << heads[current->vertex]->next->name;
                     if(current->next != NULL){
                         cout << "->";
                     }
-                    else{
-                        cout << endl;
-                    }
-
+                    
                     current = current->next;
                 }
+
+                cout << endl;
             }
+
+            cout << endl;
         }
 
         /*
