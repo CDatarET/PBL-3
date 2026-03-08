@@ -2,7 +2,7 @@
 using namespace std;
 
 class GraphNode{
-    int vertex;
+    int vertexID;
     string name;
     GraphNode *next;
     friend class Graph;
@@ -21,7 +21,7 @@ class Graph{
                 heads[i] = new GraphNode;
                 heads[i]->next = new GraphNode;
                 GraphNode *current = heads[i]->next;
-                current->vertex = i;
+                current->vertexID = i;
 
                 cout << "Enter Name: ";
                 cin >> current->name;
@@ -34,10 +34,10 @@ class Graph{
                     continue;
                 }
 
-                cout << "Enter IDs of connections that " << current->name << " (ID = " << current->vertex << ")" << " has: ";
+                cout << "Enter IDs of connections that " << current->name << " (ID = " << current->vertexID << ")" << " has: ";
                 for(int i = 0; i < edges; i++){
                     GraphNode *t = new GraphNode;
-                    cin >> t->vertex;
+                    cin >> t->vertexID;
                     current->next = t;
                     current = current->next;
                 }
@@ -66,7 +66,7 @@ class Graph{
                         cout << "0 ";
                     }
                     else{
-                        if(current->vertex == j){
+                        if(current->vertexID == j){
                             cout << "1 ";
                             current = current->next;
                         }
@@ -85,7 +85,7 @@ class Graph{
             for(int i = 0; i < n; i++){
                 GraphNode *current = heads[i]->next;
                 while(current != NULL){
-                    cout << heads[current->vertex]->next->name;
+                    cout << heads[current->vertexID]->next->name;
                     if(current->next != NULL){
                         cout << "->";
                     }
@@ -99,29 +99,57 @@ class Graph{
             cout << endl;
         }
 
-        /*
+        
         void DFS(int v, int visited[]){
-            cout << v << ",";
+            cout << v << ", ";
             visited[v] = 1;
+            GraphNode *current = heads[v]->next;
+
+            while(current != NULL){
+                if(heads[current->vertexID] == 0){
+                    DFS(current->vertexID, visited);
+                }
+                current = current->next;
+            }
             
         }
 
         void DFS(){
+            int visited[n] = {0};
+
+            cout << "Enter starting vertex: ";
             int v;
-            int visited[n];
-            for(int i = 0 i < n; i++){
-                visited[i] = 0;
-            }
+            cin >> v;
+            DFS(v, visited);
+
+            cout << endl;
+        }
+
+        void BFS(){
+            int Q[n] = {0};
+            int f = 0;
+            int r = 0;
+
+            cout << "Enter starting vertex: ";
+            int v;
+            cin >> v;
 
 
         }
-        
-        */
+
+        void checkHeads(){
+            for(int i = 0; i < n; i++){
+                cout << heads[i]->next->vertexID << " ";
+            }
+            cout << endl << endl;
+        }
 };
 
 int main(){
     Graph g;
     g.displayMatrix();
     g.displayList();
+    g.DFS();
+    g.checkHeads();
     return(0);
 }
