@@ -35,7 +35,7 @@ class Graph{
                 }
 
                 cout << "Enter IDs of connections that " << current->name << " (ID = " << current->vertexID << ")" << " has: ";
-                for(int i = 0; i < edges; i++){
+                for(int j = 0; j < edges; j++){
                     GraphNode *t = new GraphNode;
                     cin >> t->vertexID;
                     current->next = t;
@@ -105,8 +105,8 @@ class Graph{
             visited[v] = 1;
             GraphNode *current = heads[v]->next;
 
-            while(current != NULL){
-                if(heads[current->vertexID] == 0){
+            while(current != nullptr){
+                if(visited[current->vertexID] == 0){
                     DFS(current->vertexID, visited);
                 }
                 current = current->next;
@@ -136,13 +136,6 @@ class Graph{
 
 
         }
-
-        void checkHeads(){
-            for(int i = 0; i < n; i++){
-                cout << heads[i]->next->vertexID << " ";
-            }
-            cout << endl << endl;
-        }
 };
 
 int main(){
@@ -150,6 +143,5 @@ int main(){
     g.displayMatrix();
     g.displayList();
     g.DFS();
-    g.checkHeads();
     return(0);
 }
