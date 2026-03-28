@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 class GraphNode{
@@ -125,16 +126,34 @@ class Graph{
             cout << endl;
         }
 
-        void BFS(){
-            int Q[n] = {0};
-            int f = 0;
-            int r = 0;
+        void BFS() {
+            int visited[20] = {0};
+            queue<int> q;
 
             cout << "Enter starting vertex: ";
             int v;
             cin >> v;
 
+            visited[v] = 1;
+            q.push(v);
 
+            while(!q.empty()) {
+                int current = q.front();
+                q.pop();
+
+                cout << current << ", ";
+
+                GraphNode *next = heads[current]->next->next;
+                while(next != nullptr){
+                    if(visited[next->vertexID] == 0) {
+                        visited[next->vertexID] = 1;
+                        q.push(next->vertexID);
+                    }
+                    next = next->next;
+                }
+            }
+
+            cout << endl;
         }
 };
 
@@ -143,5 +162,6 @@ int main(){
     g.displayMatrix();
     g.displayList();
     g.DFS();
+    g.BFS();
     return(0);
 }
